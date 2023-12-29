@@ -7,7 +7,7 @@ from discord.ui import Button, View, Select
 from discord import app_commands
 import asyncio
 import sys
-from app.bot.helper.confighelper import MEMBARR_VERSION, switch, Discord_bot_token, plex_roles, jellyfin_roles
+from app.bot.helper.confighelper import member_VERSION, switch, Discord_bot_token, plex_roles, jellyfin_roles
 import app.bot.helper.confighelper as confighelper
 import app.bot.helper.jellyfinhelper as jelly
 from app.bot.helper.message import *
@@ -69,8 +69,8 @@ async def getuser(interaction, server, type):
             return None
 
 
-plex_commands = app_commands.Group(name="plexsettings", description="Membarr Plex commands")
-jellyfin_commands = app_commands.Group(name="jellyfinsettings", description="Membarr Jellyfin commands")
+plex_commands = app_commands.Group(name="plexsettings", description="member Plex commands")
+jellyfin_commands = app_commands.Group(name="jellyfinsettings", description="member Jellyfin commands")
 
 
 @plex_commands.command(name="addrole", description="Add a role to automatically add users to Plex")
@@ -99,7 +99,7 @@ async def plexroleremove(interaction: discord.Interaction, role: discord.Role):
         return
     plex_roles.remove(role.name)
     confighelper.change_config("plex_roles", ",".join(plex_roles))
-    await interaction.response.send_message(f"Membarr will stop auto-adding \"{role.name}\" to Plex", ephemeral=True)
+    await interaction.response.send_message(f"member will stop auto-adding \"{role.name}\" to Plex", ephemeral=True)
 
 
 @plex_commands.command(name="listroles", description="List all roles whose members will be automatically added to Plex")
@@ -183,7 +183,7 @@ async def jellyroleremove(interaction: discord.Interaction, role: discord.Role):
         return
     jellyfin_roles.remove(role.name)
     confighelper.change_config("jellyfin_roles", ",".join(jellyfin_roles))
-    await interaction.response.send_message(f"Membarr will stop auto-adding \"{role.name}\" to Jellyfin",
+    await interaction.response.send_message(f"member will stop auto-adding \"{role.name}\" to Jellyfin",
                                             ephemeral=True)
 
 
@@ -222,7 +222,7 @@ async def setupjelly(interaction: discord.Interaction, server_url: str, api_key:
             return
         else:
             await embederror(interaction.followup,
-                             "Unknown error occurred while connecting to Jellyfin. Check Membarr logs.")
+                             "Unknown error occurred while connecting to Jellyfin. Check member logs.")
     except ConnectTimeout as e:
         await embederror(interaction.followup,
                          "Connection to server timed out. Check that Jellyfin is online and reachable.")
@@ -231,7 +231,7 @@ async def setupjelly(interaction: discord.Interaction, server_url: str, api_key:
         print("Exception while testing Jellyfin connection")
         print(type(e).__name__)
         print(e)
-        await embederror(interaction.followup, "Unknown exception while connecting to Jellyfin. Check Membarr logs")
+        await embederror(interaction.followup, "Unknown exception while connecting to Jellyfin. Check member logs")
         return
 
     confighelper.change_config("jellyfin_server_url", str(server_url))

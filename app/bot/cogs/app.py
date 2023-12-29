@@ -131,9 +131,9 @@ else:
 
 class app(commands.Cog):
     # App command groups
-    plex_commands = app_commands.Group(name="plex", description="Membarr Plex commands")
-    jellyfin_commands = app_commands.Group(name="jellyfin", description="Membarr Jellyfin commands")
-    membarr_commands = app_commands.Group(name="membarr", description="Membarr general commands")
+    plex_commands = app_commands.Group(name="plex", description="member Plex commands")
+    jellyfin_commands = app_commands.Group(name="jellyfin", description="member Jellyfin commands")
+    member_commands = app_commands.Group(name="member", description="member general commands")
 
     def __init__(self, bot):
         self.bot = bot
@@ -141,7 +141,7 @@ class app(commands.Cog):
     @commands.Cog.listener()
     async def on_ready(self):
         print('------')
-        print("{:^41}".format(f"MEMBARR V {MEMBARR_VERSION}"))
+        print("{:^41}".format(f"member V {member_VERSION}"))
         print(f'Made by Yoruio https://github.com/Yoruio/\n')
         print(f'Forked from Invitarr https://github.com/Sleepingpirates/Invitarr')
         print(f'Named by lordfransie')
@@ -386,7 +386,7 @@ class app(commands.Cog):
         await self.removefromjellyfin(username, interaction.response)
     
     @app_commands.checks.has_permissions(administrator=True)
-    @membarr_commands.command(name="dbadd", description="Add a user to the Membarr database")
+    @member_commands.command(name="dbadd", description="Add a user to the member database")
     async def dbadd(self, interaction: discord.Interaction, member: discord.Member, email: str = "", jellyfin_username: str = ""):
         email = email.strip()
         jellyfin_username = jellyfin_username.strip()
@@ -400,14 +400,14 @@ class app(commands.Cog):
             db.save_user_all(str(member.id), email, jellyfin_username)
             await embedinfo(interaction.response,'User was added to the database.')
         except Exception as e:
-            await embedinfo(interaction.response, 'There was an error adding this user to database. Check Membarr logs for more info')
+            await embedinfo(interaction.response, 'There was an error adding this user to database. Check member logs for more info')
             print(e)
 
     @app_commands.checks.has_permissions(administrator=True)
-    @membarr_commands.command(name="dbls", description="View Membarr database")
-    async def dbls(self, interaction: discord.Interaction):
+    @member_commands.command(name="database", description="View member database")
+    async def database(self, interaction: discord.Interaction):
 
-        embed = discord.Embed(title='Membarr Database.')
+        embed = discord.Embed(title='member Database.')
         all = db.read_all()
         table = texttable.Texttable()
         table.set_cols_dtype(["t", "t", "t", "t"])
@@ -438,9 +438,9 @@ class app(commands.Cog):
         
             
     @app_commands.checks.has_permissions(administrator=True)
-    @membarr_commands.command(name="dbrm", description="Remove user from Membarr database")
+    @member_commands.command(name="dbrm", description="Remove user from member database")
     async def dbrm(self, interaction: discord.Interaction, position: int):
-        embed = discord.Embed(title='Membarr Database.')
+        embed = discord.Embed(title='member Database.')
         all = db.read_all()
         for index, peoples in enumerate(all):
             index = index + 1

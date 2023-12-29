@@ -1,12 +1,12 @@
 [![Discord](https://img.shields.io/discord/997761163020488815?color=7289DA&label=Discord&style=for-the-badge&logo=discord)](https://discord.gg/7hAUKKTyTd)
-[![DockerHub](https://img.shields.io/badge/Docker-Hub-%23099cec?style=for-the-badge&logo=docker)](https://hub.docker.com/r/yoruio/membarr)
-![Docker Pulls](https://img.shields.io/docker/pulls/yoruio/membarr?color=099cec&style=for-the-badge)
-[![docker-sync](https://github.com/Yoruio/Membarr/actions/workflows/docker-sync.yml/badge.svg)](https://github.com/Yoruio/Membarr/actions/workflows/docker-sync.yml)
+[![DockerHub](https://img.shields.io/badge/Docker-Hub-%23099cec?style=for-the-badge&logo=docker)](https://hub.docker.com/r/yoruio/member)
+![Docker Pulls](https://img.shields.io/docker/pulls/yoruio/member?color=099cec&style=for-the-badge)
+[![docker-sync](https://github.com/Yoruio/member/actions/workflows/docker-sync.yml/badge.svg)](https://github.com/Yoruio/member/actions/workflows/docker-sync.yml)
 
-Membarr 
+member 
 =================
 
-Membarr is a fork of Invitarr that invites discord users to Plex and Jellyfin. You can also automate this bot to invite discord users to a media server once a certain role is given to a user or the user can also be added manually.  
+member is a fork of Invitarr that invites discord users to Plex and Jellyfin. You can also automate this bot to invite discord users to a media server once a certain role is given to a user or the user can also be added manually.  
 
 ### Features
 
@@ -26,12 +26,12 @@ This command is used to remove an email from plex
 This command is used to add a user to Jellyfin.
 /jellyfin remove <jellyfin username>
 This command is used to remove a user from Jellyfin.
-/membarr dbls
-This command is used to list Membarr's database
-/membarr dbadd <@user> <optional: plex email> <optional: jellyfin username>
+/member database
+This command is used to list member's database
+/member dbadd <@user> <optional: plex email> <optional: jellyfin username>
 This command is used to add exsisting  plex emails, jellyfin users and discord id to the DB.
-/membarr dbrm <position>
-This command is used to remove a record from the Db. Use /membarr dbls to determine record position. ex: /membarr dbrm 1
+/member dbrm <position>
+This command is used to remove a record from the Db. Use /member database to determine record position. ex: /member dbrm 1
 ```
 # Creating Discord Bot
 1. Create the discord server that your users will get member roles or use an existing discord that you can assign roles from
@@ -51,7 +51,7 @@ This command is used to remove a record from the Db. Use /membarr dbls to determ
 > For Manual an Docker setup, see below
 
 1. Ensure you have the Community Applications plugin installed.
-2. Inside the Community Applications app store, search for Membarr.
+2. Inside the Community Applications app store, search for member.
 3. Click the Install Button.
 4. Add discord bot token.
 5. Click apply
@@ -72,9 +72,9 @@ python3 Run.py
 ```
 
 # Docker Setup & Start
-To run Membarr in Docker, run the following command, replacing [path to config] with the absolute path to your bot config folder:
+To run member in Docker, run the following command, replacing [path to config] with the absolute path to your bot config folder:
 ```
-docker run -d --restart unless-stopped --name membarr -v /[path to config]:/app/app/config -e "token=YOUR_DISCORD_TOKEN_HERE" yoruio/membarr:latest
+docker run -d --restart unless-stopped --name member -v /[path to config]:/app/app/config -e "token=YOUR_DISCORD_TOKEN_HERE" yoruio/member:latest
 ```
 
 # After bot has started 
@@ -115,10 +115,10 @@ This command disables the Jellyfin integration (currently only disables auto-add
 # Migration from Invitarr
 Invitarr does not require the applications.commands scope, so you will need to kick and reinvite your Discord bot to your server, making sure to tick both the "bot" and "applications.commands" scopes in the Oauth URL generator.
 
-Membarr uses a slightly different database table than Invitarr. Membarr will automatically update the Invitarr db table to the current Membarr table format, but the new table will no longer be compatible with Invitarr, so backup your app.db before running Membarr!
+member uses a slightly different database table than Invitarr. member will automatically update the Invitarr db table to the current member table format, but the new table will no longer be compatible with Invitarr, so backup your app.db before running member!
 
 # Migration to Invitarr
-As mentioned in [Migration from Invitarr](#Migration-From-Invitarr), Membarr has a slightly different db table than Invitarr. To Switch back to Invitarr, you will have to manually change the table format back. Open app.db in a sqlite cli tool or browser like DB Browser, then remove the "jellyfin_username" column, and make the "email" column non-nullable.
+As mentioned in [Migration from Invitarr](#Migration-From-Invitarr), member has a slightly different db table than Invitarr. To Switch back to Invitarr, you will have to manually change the table format back. Open app.db in a sqlite cli tool or browser like DB Browser, then remove the "jellyfin_username" column, and make the "email" column non-nullable.
 
 # Contributing
 We appreciate any and all contributions made to the project, whether that be new features, bugfixes, or even fixed typos! If you would like to contribute to the project, simply fork the development branch, make your changes, and open a pull request. *Pull requests that are not based on the development branch will be rejected.*
